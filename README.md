@@ -1,4 +1,4 @@
-# I Opened 60,000 Ports on AWS… Here's What I Did Next
+# I Opened 60,000 Ports on AWS… Here's What I Did
  
 ## Introduction
 
