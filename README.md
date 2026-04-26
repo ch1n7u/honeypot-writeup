@@ -1,15 +1,15 @@
-# I Opened 60,000 Ports on AWS… Here's What Hit My Honeypot
-
-
 ## Introduction
+
 If you want to learn how real-world attacks look without putting production systems at risk, a honeypot lab is a great way to do it. A honeypot is a deliberately exposed system or service designed to attract and record malicious activity.
 
 T-Pot is useful because it bundles multiple honeypots into one platform and includes built-in monitoring and analytics. It runs the sensors in Docker containers and ships logs into the Elastic stack (Elasticsearch, Logstash, Kibana), so you can both capture and analyze attack data from one place. This is especially helpful for security learning, threat research, and blue-team experimentation.
 
 ## Disclaimer
+
 This setup is for educational and research use only. Make sure your usage follows local laws, your organization policies, and AWS terms of service.
 
 ## Prerequisites
+
 - AWS account with access to Free Tier services
 - Basic Linux and SSH command-line knowledge
 - A terminal on Linux with SSH available
@@ -18,6 +18,7 @@ This setup is for educational and research use only. Make sure your usage follow
 - Free Tier testing (t2.micro or t3.micro) works for lightweight learning, but performance and sensor coverage will be limited
 
 ## Architecture Overview
+
 At a high level, T-Pot runs as a Docker-based stack:
 - Multiple honeypot containers collect attacker interactions
 - Log pipeline and storage are handled by the Elastic stack
@@ -44,7 +45,7 @@ At a high level, T-Pot runs as a Docker-based stack:
 ![EC2 key pair creation settings](images/ec2-key-pair-creation.png)
 
 6. In **Network Settings**, enable **Auto-assign public IP**.
-   - Security group ports are configured later.
+   - Security group ports will be configured later.
 
 ![EC2 network settings with public IP enabled](images/ec2-network-public-ip-settings.png)
 
@@ -114,12 +115,12 @@ For the source IP column, do not leave SSH wide open unless you truly need to. U
 
 ### Ports Reference
 
-| Purpose | Port(s) | Notes |
-|---|---:|---|
-| SSH before T-Pot install | 22 |
-| SSH after T-Pot install | 64295 | Restrict source to your IP |
-| T-Pot Web UI | 64297 | Optional: restrict to your IP or VPN |
-| Honeypot listeners | 1-64000 | Can be open, but understand the exposure and cost risk |
+| Purpose                  | Port(s) | Notes                         |
+| ------------------------ | ------: | ----------------------------- |
+| SSH before T-Pot install |      22 |                               |
+| SSH after T-Pot install  |   64295 | Restrict source to your IP    |
+| T-Pot Web UI             |   64297 | Restrict source to your IP    |
+| Honeypot listeners       | 1-64000 | Open these ports for everyone |
 
 Then reconnect using the updated SSH port:
 
@@ -181,6 +182,7 @@ Log in with the credentials created during setup. The dashboard gives you a quic
 ![T-Pot web UI login and dashboard screen](images/tpot-web-ui-login-dashboard.png)
 
 ## Security Considerations
+
 - Use strong, unique passwords for T-Pot web access and rotate them periodically.
 - Keep your PEM file private and never commit it into repositories.
 - Do not expose more inbound ports than necessary for your test goals.
@@ -188,22 +190,26 @@ Log in with the credentials created during setup. The dashboard gives you a quic
 - Treat this as an isolated lab, not a production security control.
 
 ## Cost Awareness
+
 - AWS Free Tier has limits on compute hours, storage, and bandwidth.
 - You can still be charged for extra EBS storage, outbound data transfer, Elastic IP usage patterns, or traffic spikes.
 - Monitor billing and set AWS Budgets alerts before exposing large port ranges.
 
-## Troubleshooting
+## Troubleshooting:
 
 ### SSH connection fails
+
 - Confirm instance is running and has a public IP.
 - Confirm you are using the correct user (**admin**) and key permissions (**chmod 600 tpot.pem**).
 - Use port **22** before install and **64295** after T-Pot install.
 
 ### Ports not reachable
+
 - Recheck security group inbound rules and source CIDR entries.
 - Verify local firewall/NACL rules are not blocking traffic.
 
 ### Docker or containers not running
+
 - Check Docker status:
 
 ~~~bash
@@ -223,9 +229,11 @@ docker ps
 ~~~
 
 ### Web UI not loading
+
 - Confirm you are using **https://AWS_PUBLIC_IP:64297**.
 - Check that port **64297** is open in security groups.
 - Wait a few minutes after reboot or service startup for all containers to initialize.
 
 ## Conclusion
+
 You now have a working AWS-hosted T-Pot honeypot lab with web-based visibility into incoming attack traffic. A good next step is to spend time in Kibana building simple filters and dashboards, then track trends like top source IPs, most targeted ports, and daily event volume.
