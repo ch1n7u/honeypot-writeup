@@ -1,3 +1,5 @@
+# I Opened 60,000 Ports on AWS… Here's What Hit My Honeypot
+ 
 ## Introduction
 
 If you want to learn how real-world attacks look without putting production systems at risk, a honeypot lab is a great way to do it. A honeypot is a deliberately exposed system or service designed to attract and record malicious activity.
