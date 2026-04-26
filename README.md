@@ -1,4 +1,4 @@
-![[th.png]]
+![Thumbnail](images/th.png)
 ## 🚨 What Happens When You Open 60,000 Ports?
 
 Within minutes of exposing 60,000 ports on a public AWS instance, the system began receiving connection attempts from across the globe.
